@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require("mongoose")
 
 const userSchema = new Schema(
   {
@@ -8,36 +8,39 @@ const userSchema = new Schema(
       unique: true,
       minlength: [6, 'Email must have at least 6 characters']
     },
+
     password: {
       type: String,
       required: [true, 'Password is required.']
     },
+
     username: {
       type: String,
       required: [true, 'Username is required'],
       minlength: [3, ' Username must have at least 3 characters'],
-      unique: true,
       trim: true
     },
+
     avatar: {
       type: String,
       default: 'https://example.com/default-avatar.png',
     },
+
     grade: {
       type: String,
       required: true,
+      enum: ['value1', 'value2']
     },
-    rol: {
+
+    role: {
       type: String,
-      enum: ['Admin', 'User'],
-      default: 'User'
+      enum: ['ADMIN', 'USER'],
+      default: 'USER'
     }
   },
   {
     timestamps: true
   }
-);
+)
 
-const User = model("User", userSchema);
-
-module.exports = User;
+module.exports = model("User", userSchema)

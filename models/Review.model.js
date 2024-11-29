@@ -1,49 +1,29 @@
-const { Schema, model } = require("mongoose")
+const { Schema, model } = require('mongoose')
 
 const reviewSchema = new Schema({
+
     activity: {
         type: Schema.Types.ObjectId,
         ref: 'Activity',
-        required: true
-    },
-
-    authorName: {
-        type: String,
-        required: true,
-        ref: "User"
-
-    },
-
-    authorAvatar: {
-        type: String,
-        default: "https/example.com/default.authoravatar.pnj",
-        ref: 'User'
     },
 
     rating: {
         type: Number,
         required: true,
-        min: 1,
-        max: 10
+        min: [1, 'Rating must be at least 1'],
+        max: [10, 'Rating must be 10 for maximum']
     },
 
     description: {
         type: String,
         required: true,
         trim: true,
-        maxlenght: 100
-
+        maxlenght: [100, 'Description must be 100 characters for maximum']
     },
 
-    date: {
-        type: Date
-
-    },
-
-    contact: {
-        type: String,
-        ref: "User"
-
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 },
     {

@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const activitySchema = new Schema({
+
     name: {
         type: String,
         required: true,
@@ -13,17 +14,17 @@ const activitySchema = new Schema({
         trim: true
     },
 
-    image: {
+    cover: {
         type: String,
         required: true,
         trim: true
     },
 
     categories: {
-        type: Array
+        type: [String]
     },
 
-    adress: {
+    address: {
         city: {
             type: String
         },
@@ -33,16 +34,16 @@ const activitySchema = new Schema({
         zipcode: {
             type: Number
         },
-        lat: {
-            type: Number
-        },
-        lang: {
-            type: Number
+        location: {
+            type: {
+                type: String
+            },
+            coords: [Number]
         }
     },
 
     target: {
-        type: Array
+        type: [String]
     },
 
     price: {
@@ -61,22 +62,16 @@ const activitySchema = new Schema({
         minlength: [1, 'Duration must have at least 1 minute']
     },
 
-    contact: {
-        type: String,
-        required: true,
-        ref: 'User'
-    },
-
     available: {
         type: Boolean,
         required: true
     },
 
     accesibility: {
-        type: Array
+        type: [String]
     },
 
-    owner: {
+    host: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
