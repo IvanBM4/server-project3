@@ -22,6 +22,8 @@ const signupUser = (req, res, next) => {
         return
     }
 
+    // para terminar 
+
     User
         .findOne({ email })
         .then(user => {
