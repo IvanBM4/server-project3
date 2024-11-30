@@ -29,7 +29,7 @@ const userSchema = new Schema(
     grade: {
       type: String,
       required: true,
-      enum: ['value1', 'value2']
+      enum: ['professional', 'beginner', 'amateur']
     },
 
     role: {
