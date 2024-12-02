@@ -12,11 +12,22 @@ const getActivities = (req, res, next) => {
 
 const filterActivities = (req, res, next) => {
 
+    const buildQuery = (filters) => {
+        let query = {}
+
+        if (filters.name) {
+            query.name = new RegExp(filters.name, 'i')
+        }
+
+        return query
+    }
+
+    const query = buildQuery(req.query)
+
     Activity
-        .find(req.query)
+        .find(query)
         .then(activities => res.json(activities))
         .catch(err => next(err))
-
 }
 
 const getOneActivity = (req, res, next) => {
