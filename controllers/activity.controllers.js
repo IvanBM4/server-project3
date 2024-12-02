@@ -48,6 +48,7 @@ const editActivity = (req, res, next) => {
         .catch(err => next(err))
 }
 
+
 const removeActivity = (req, res, next) => {
     const { id: activityId } = req.params
     if (!mongoose.Types.ObjectId.isValid(activityId)) {
