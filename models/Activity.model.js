@@ -80,4 +80,6 @@ const activitySchema = new Schema({
         timestamps: true
     })
 
+activitySchema.index({ location: '2dsphere' })
+
 module.exports = model('Activity', activitySchema)

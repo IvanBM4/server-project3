@@ -34,6 +34,21 @@ const getOneActivity = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const getActivitiesByUser = (req, res, next) => {
+
+    const { id: host } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(host)) {
+        res.status(400).json({ message: 'Specified id is not valid' })
+        return
+    }
+
+    Activity
+        .find({ host })
+        .then(activities => res.json(activities))
+        .catch(err => next(err))
+}
+
 const saveActivity = (req, res, next) => {
 
     const {
@@ -47,7 +62,15 @@ const saveActivity = (req, res, next) => {
         available,
         target,
         accesibility,
-        address: { city, street, zipcode } } = req.body
+        address: { city, street, zipcode, longitude, latitude }
+    } = req.body
+
+    const location = {
+        type: 'Point',
+        coords: [longitude, latitude]
+    }
+
+    const { _id: host } = req.payload
 
     Activity
         .create({
@@ -61,7 +84,8 @@ const saveActivity = (req, res, next) => {
             available,
             target,
             accesibility,
-            address: { city, street, zipcode }
+            address: { city, street, zipcode, location },
+            host
         })
         .then(activities => res.status(201).json(activities))
         .catch(err => next(err))
@@ -80,7 +104,7 @@ const editActivity = (req, res, next) => {
         available,
         target,
         accesibility,
-        address: { city, street, zipcode }
+        address: { city, street, zipcode, location: { type, coords } }
     } = req.body
 
     const { id: activityId } = req.params
@@ -103,7 +127,7 @@ const editActivity = (req, res, next) => {
                 available,
                 target,
                 accesibility,
-                address: { city, street, zipcode }
+                address: { city, street, zipcode, location: { type, coords } }
             },
             {
                 runValidators: true,
@@ -136,5 +160,6 @@ module.exports = {
     saveActivity,
     editActivity,
     removeActivity,
-    filterActivities
+    filterActivities,
+    getActivitiesByUser
 }

@@ -5,8 +5,10 @@ const {
     saveActivity,
     editActivity,
     removeActivity,
-    filterActivities
+    filterActivities,
+    getActivitiesByUser
 } = require('../controllers/activity.controllers')
+const verifyToken = require('../middleware/verifyToken')
 
 const router = express.Router()
 
@@ -16,11 +18,12 @@ router.get('/activities', getActivities)
 
 router.get('/activities/:id', getOneActivity)
 
-router.post('/activities/', saveActivity)
+router.get('/activities/users/:id', getActivitiesByUser)
+
+router.post('/activities/', verifyToken, saveActivity)
 
 router.put('/activities/:id', editActivity)
 
 router.delete('/activities/:id', removeActivity)
-
 
 module.exports = router

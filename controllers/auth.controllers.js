@@ -75,18 +75,29 @@ const loginUser = (req, res, next) => {
                     algorithm: 'HS256', expiresIn: '6h'
                 })
             res.json({ authToken })
-
         }
         )
 
 }
 
 const verifyUser = (req, res, next) => {
+
     res.json(req.payload)
+
+}
+
+const getUsers = (req, res, next) => {
+
+    User
+        .find()
+        .then(users => res.json(users))
+        .catch(err => next(err))
+
 }
 
 module.exports = {
     signupUser,
     loginUser,
-    verifyUser
+    verifyUser,
+    getUsers
 }
