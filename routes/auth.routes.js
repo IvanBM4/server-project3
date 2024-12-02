@@ -1,9 +1,9 @@
-const { signupUser, loginUser, verifyUser } = require("../controllers/auth.controllers")
-const verifyToken = require("../middleware/verifyToken")
+const { signupUser, loginUser, verifyUser } = require('../controllers/auth.controllers')
+const verifyToken = require('../middleware/verifyToken')
 
-const router = require("express").Router()
+const router = require('express').Router()
 
-router.post("/signup", signupUser)
+router.post('/signup', signupUser)
 
 router.post('/login', loginUser)
 

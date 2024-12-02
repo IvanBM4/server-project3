@@ -13,6 +13,7 @@ const signupUser = (req, res, next) => {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+
     if (!emailRegex.test(email)) {
         next(new Error('Provide password and username'))
         return
@@ -43,6 +44,7 @@ const signupUser = (req, res, next) => {
 }
 
 const loginUser = (req, res, next) => {
+
     const { email, password } = req.body
 
     if (email === '' || password === '') {

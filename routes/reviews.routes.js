@@ -1,5 +1,5 @@
 
-const express = require("express")
+const express = require('express')
 const {
 
     getReviews,
@@ -9,19 +9,19 @@ const {
     deleteReview
 
 
-} = require("../controllers/review.controllers")
+} = require('../controllers/review.controllers')
 
 const router = express.Router()
 
-router.get("/reviews", getReviews)
+router.get('/reviews', getReviews)
 
-router.get("/reviews/:id", getOneReview)
+router.get('/reviews/:id', getOneReview)
 
-router.post("/reviews", createReview)
+router.post('/reviews', createReview)
 
-router.put("/reviews/:id", editReview)
+router.put('/reviews/:id', editReview)
 
-router.delete("/reviews/:id", deleteReview)
+router.delete('/reviews/:id', deleteReview)
 
 
 module.exports = router

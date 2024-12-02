@@ -1,4 +1,4 @@
-const Activity = require("../models/Activity.model")
+const Activity = require('../models/Activity.model')
 const mongoose = require('mongoose')
 
 const getActivities = (req, res, next) => {
@@ -54,7 +54,19 @@ const saveActivity = (req, res, next) => {
 }
 
 const editActivity = (req, res, next) => {
-    const { name, description, cover, date, duration, categories, price, available, target, accesibility, address: { city, street, zipcode } } = req.body
+    const {
+        name,
+        description,
+        cover,
+        date,
+        duration,
+        categories,
+        price,
+        available,
+        target,
+        accesibility,
+        address: { city, street, zipcode }
+    } = req.body
     const { id: activityId } = req.params
     if (!mongoose.Types.ObjectId.isValid(activityId)) {
         res.status(400).json({ message: 'Specified id is not valid' })
@@ -62,7 +74,19 @@ const editActivity = (req, res, next) => {
     }
     Activity
         .findByIdAndUpdate(activityId,
-            { name, description, date, cover, duration, categories, price, available, target, accesibility, address: { city, street, zipcode } },
+            {
+                name,
+                description,
+                date,
+                cover,
+                duration,
+                categories,
+                price,
+                available,
+                target,
+                accesibility,
+                address: { city, street, zipcode }
+            },
             {
                 runValidators: true,
                 new: true

@@ -8,6 +8,7 @@ const verifyToken = (req, res, next) => {
         req.payload = validTokenPayload
         next()
     }
+
     catch (error) {
         res.status(401).json('token not provided or not valid')
     }
