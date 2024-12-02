@@ -1,4 +1,4 @@
-
+const verifyToken = require('../middleware/verifyToken')
 const express = require('express')
 const {
 
@@ -23,7 +23,7 @@ router.get('/reviews/:id', getOneReview)
 
 router.post('/reviews', createReview)
 
-router.put('/reviews/:id', editReview)
+router.put('/reviews/:id', editReview,)
 
 router.delete('/reviews/:id', deleteReview)
 

@@ -7,7 +7,6 @@ const getActivities = (req, res, next) => {
         .find()
         .then(activities => res.json(activities))
         .catch(err => next(err))
-
 }
 
 const filterActivities = (req, res, next) => {
@@ -16,7 +15,6 @@ const filterActivities = (req, res, next) => {
         .find(req.query)
         .then(activities => res.json(activities))
         .catch(err => next(err))
-
 }
 
 const getOneActivity = (req, res, next) => {
@@ -47,7 +45,8 @@ const saveActivity = (req, res, next) => {
         available,
         target,
         accesibility,
-        address: { city, street, zipcode } } = req.body
+        address: { city, street, zipcode }
+    } = req.body
 
     Activity
         .create({
@@ -63,7 +62,7 @@ const saveActivity = (req, res, next) => {
             accesibility,
             address: { city, street, zipcode }
         })
-        .then(activities => res.status(201).json(activities))
+        .then(activity => res.status(201).json(activity))
         .catch(err => next(err))
 }
 
@@ -110,7 +109,7 @@ const editActivity = (req, res, next) => {
                 new: true
             }
         )
-        .then(activities => res.json(activities))
+        .then(activity => res.json(activity))
         .catch(err => next(err))
 }
 

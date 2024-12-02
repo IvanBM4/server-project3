@@ -26,8 +26,6 @@ const getOneReview = (req, res, next) => {
         .catch(err => next(err))
 }
 
-
-
 const createReview = (req, res, next) => {
 
     const {
@@ -44,7 +42,7 @@ const createReview = (req, res, next) => {
             description,
             author
         })
-        .then(reviews => res.status(201).json(reviews))
+        .then(review => res.status(201).json(review))
         .catch(err => next(err))
 
 }
@@ -113,11 +111,35 @@ const deleteReview = (req, res, next) => {
 }
 
 const filterReviews = (req, res, next) => {
+
+    const buildQuery = (filters) => {
+
+        let query = {}
+
+        if (filters.startDate || filters.endDate) query.createdAt = {}
+        if (filters.rating) query.rating = {}
+        if (filters.startDate) query.createdAt.$gte = new Date(filters.startDate)
+
+        if (filters.endDate) {
+            const endDate = new Date(filters.endDate);
+            endDate.setHours(23, 59, 59, 999);
+            query.createdAt.$lte = endDate;
+        }
+
+        if (filters.rating) query.rating.$gte = parseInt(filters.rating)
+
+        return query
+    }
+
+    const query = buildQuery(req.query)
+
     Review
-        .find(req.query)
+        .find(query)
+        .sort({ createdAt: -1 })
         .then(reviews => res.json(reviews))
         .catch(err => next(err))
 }
+
 
 module.exports = {
     getReviews,
