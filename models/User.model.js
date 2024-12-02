@@ -37,10 +37,11 @@ const userSchema = new Schema(
       enum: ['ADMIN', 'USER'],
       default: 'USER'
     }
+
   },
   {
     timestamps: true
   }
 )
 
-module.exports = model("User", userSchema)
+module.exports = model('User', userSchema)

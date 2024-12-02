@@ -4,5 +4,8 @@ module.exports = app => {
 
     const activitiesRoutes = require('./activities.routes')
     app.use('/api', activitiesRoutes)
+
+    const reviewRoutes = require('./reviews.routes')
+    app.use("/api", authRoutes, reviewRoutes)
 }
 
