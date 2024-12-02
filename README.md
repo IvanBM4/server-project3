@@ -3,7 +3,7 @@ ACTIVITIES ROUTES
 |HTTP Method|PATH|ACTION|
 |GET|/activities|Get all activities|
 |GET|/activities/:id|Get one activity|
-|GET|//activities/search|Filter activities|
+|GET|/activities/search|Filter activities|
 |POST|/activities|Create one activity|
 |PUT|/activities/:id|Edit one activity|
 |DELETE|/activities/:id|Delete one activity|
