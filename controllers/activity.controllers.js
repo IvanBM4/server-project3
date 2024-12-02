@@ -2,19 +2,32 @@ const Activity = require('../models/Activity.model')
 const mongoose = require('mongoose')
 
 const getActivities = (req, res, next) => {
+
     Activity
         .find()
-        .select({ name: 1, owner: 1 })
         .then(activities => res.json(activities))
         .catch(err => next(err))
+
+}
+
+const filterActivities = (req, res, next) => {
+
+    Activity
+        .find(req.query)
+        .then(activities => res.json(activities))
+        .catch(err => next(err))
+
 }
 
 const getOneActivity = (req, res, next) => {
+
     const { id: activityId } = req.params
+
     if (!mongoose.Types.ObjectId.isValid(activityId)) {
         res.status(400).json({ message: 'Specified id is not valid' })
         return
     }
+
     Activity
         .findById(activityId)
         .then(activities => res.json(activities))
@@ -35,6 +48,7 @@ const saveActivity = (req, res, next) => {
         target,
         accesibility,
         address: { city, street, zipcode } } = req.body
+
     Activity
         .create({
             name,
@@ -54,6 +68,7 @@ const saveActivity = (req, res, next) => {
 }
 
 const editActivity = (req, res, next) => {
+
     const {
         name,
         description,
@@ -67,11 +82,14 @@ const editActivity = (req, res, next) => {
         accesibility,
         address: { city, street, zipcode }
     } = req.body
+
     const { id: activityId } = req.params
+
     if (!mongoose.Types.ObjectId.isValid(activityId)) {
         res.status(400).json({ message: 'Specified id is not valid' })
         return
     }
+
     Activity
         .findByIdAndUpdate(activityId,
             {
@@ -98,11 +116,14 @@ const editActivity = (req, res, next) => {
 
 
 const removeActivity = (req, res, next) => {
+
     const { id: activityId } = req.params
+
     if (!mongoose.Types.ObjectId.isValid(activityId)) {
         res.status(400).json({ message: 'Specified id is not valid' })
         return
     }
+
     Activity
         .findByIdAndDelete(activityId)
         .then(() => res.sendStatus(200))
@@ -114,5 +135,6 @@ module.exports = {
     getOneActivity,
     saveActivity,
     editActivity,
-    removeActivity
+    removeActivity,
+    filterActivities
 }

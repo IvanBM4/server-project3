@@ -26,6 +26,8 @@ const getOneReview = (req, res, next) => {
         .catch(err => next(err))
 }
 
+
+
 const createReview = (req, res, next) => {
 
     const {
@@ -82,15 +84,15 @@ const editReview = (req, res, next) => {
 
 const getReviewByActivity = (req, res, next) => {
 
-    const { id: activityId } = req.params
+    const { id: activity } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(activityId)) {
+    if (!mongoose.Types.ObjectId.isValid(activity)) {
         res.status(400).json({ message: 'Specified id is not valid' })
         return
     }
 
     Review
-        .find(activityId)
+        .find({ activity })
         .then(reviews => res.json(reviews))
         .catch(err => next(err))
 }
@@ -110,11 +112,19 @@ const deleteReview = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const filterReviews = (req, res, next) => {
+    Review
+        .find(req.query)
+        .then(reviews => res.json(reviews))
+        .catch(err => next(err))
+}
+
 module.exports = {
     getReviews,
     getOneReview,
     createReview,
     editReview,
     deleteReview,
-    getReviewByActivity
+    getReviewByActivity,
+    filterReviews
 }

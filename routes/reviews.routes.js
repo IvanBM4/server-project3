@@ -6,12 +6,16 @@ const {
     getOneReview,
     createReview,
     editReview,
-    deleteReview
+    deleteReview,
+    filterReviews,
+    getReviewByActivity
 
 
 } = require('../controllers/review.controllers')
 
 const router = express.Router()
+
+router.get('/reviews/search', filterReviews)
 
 router.get('/reviews', getReviews)
 
@@ -23,5 +27,6 @@ router.put('/reviews/:id', editReview)
 
 router.delete('/reviews/:id', deleteReview)
 
+router.get("/reviews/activities/:id", getReviewByActivity)
 
 module.exports = router
