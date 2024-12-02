@@ -22,15 +22,39 @@ const getOneActivity = (req, res, next) => {
 }
 
 const saveActivity = (req, res, next) => {
-    const { name, description, date, duration } = req.body
+
+    const {
+        name,
+        description,
+        date,
+        cover,
+        duration,
+        categories,
+        price,
+        available,
+        target,
+        accesibility,
+        address: { city, street, zipcode } } = req.body
     Activity
-        .create({ name, description, date, duration })
+        .create({
+            name,
+            description,
+            cover,
+            date,
+            duration,
+            categories,
+            price,
+            available,
+            target,
+            accesibility,
+            address: { city, street, zipcode }
+        })
         .then(activities => res.status(201).json(activities))
         .catch(err => next(err))
 }
 
 const editActivity = (req, res, next) => {
-    const { name, description, date, duration } = req.body
+    const { name, description, cover, date, duration, categories, price, available, target, accesibility, address: { city, street, zipcode } } = req.body
     const { id: activityId } = req.params
     if (!mongoose.Types.ObjectId.isValid(activityId)) {
         res.status(400).json({ message: 'Specified id is not valid' })
@@ -38,7 +62,7 @@ const editActivity = (req, res, next) => {
     }
     Activity
         .findByIdAndUpdate(activityId,
-            { name, description, date, duration },
+            { name, description, date, cover, duration, categories, price, available, target, accesibility, address: { city, street, zipcode } },
             {
                 runValidators: true,
                 new: true
