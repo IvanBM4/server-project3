@@ -7,16 +7,26 @@ const getActivities = (req, res, next) => {
         .find()
         .then(activities => res.json(activities))
         .catch(err => next(err))
-
 }
 
 const filterActivities = (req, res, next) => {
 
+    const buildQuery = (filters) => {
+        let query = {}
+
+        if (filters.name) {
+            query.name = new RegExp(filters.name, 'i')
+        }
+
+        return query
+    }
+
+    const query = buildQuery(req.query)
+
     Activity
-        .find(req.query)
+        .find(query)
         .then(activities => res.json(activities))
         .catch(err => next(err))
-
 }
 
 const getOneActivity = (req, res, next) => {
@@ -87,7 +97,7 @@ const saveActivity = (req, res, next) => {
             address: { city, street, zipcode, location },
             host
         })
-        .then(activities => res.status(201).json(activities))
+        .then(activity => res.status(201).json(activity))
         .catch(err => next(err))
 }
 
@@ -134,7 +144,7 @@ const editActivity = (req, res, next) => {
                 new: true
             }
         )
-        .then(activities => res.json(activities))
+        .then(activity => res.json(activity))
         .catch(err => next(err))
 }
 
