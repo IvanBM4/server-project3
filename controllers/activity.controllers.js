@@ -7,7 +7,7 @@ const getActivities = (req, res, next) => {
     Activity
         .find()
         .select({
-            title: 1,
+            name: 1,
             cover: 1,
             description: 1,
             host: 1,
@@ -61,7 +61,7 @@ const getOneActivity = (req, res, next) => {
     Activity
         .findById(activityId)
         .select({
-            title: 1,
+            name: 1,
             cover: 1,
             description: 1,
             host: 1,
