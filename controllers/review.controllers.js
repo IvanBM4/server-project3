@@ -1,4 +1,6 @@
 const Review = require('../models/Review.model')
+const Activity = require('../models/Activity.model')
+const User = require('../models/User.model')
 const mongoose = require('mongoose')
 
 const getReviews = (req, res, next) => {
@@ -21,6 +23,8 @@ const getOneReview = (req, res, next) => {
 
     Review
         .findById(reviewId)
+        .populate('Activity')
+        .populate('User')
         .then(review => res.json(review))
         .catch(err => next(err))
 }
@@ -90,6 +94,7 @@ const getReviewByActivity = (req, res, next) => {
 
     Review
         .find({ activity })
+        .populate('Activity')
         .then(reviews => res.json(reviews))
         .catch(err => next(err))
 }
@@ -105,6 +110,7 @@ const getReviewByUser = (req, res, next) => {
 
     Review
         .find({ author })
+        .populate('User')
         .then(reviews => res.json(reviews))
         .catch(err => next(err))
 }

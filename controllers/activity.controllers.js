@@ -5,6 +5,18 @@ const getActivities = (req, res, next) => {
 
     Activity
         .find()
+        .select({
+            title: 1,
+            cover: 1,
+            description: 1,
+            host: 1,
+            categories: 1,
+            target: 1,
+            accesibility: 1,
+            address: 1,
+            price: 1,
+            duration: 1
+        })
         .then(activities => res.json(activities))
         .catch(err => next(err))
 }
@@ -114,8 +126,13 @@ const editActivity = (req, res, next) => {
         available,
         target,
         accesibility,
-        address: { city, street, zipcode, location: { type, coords } }
+        address: { city, street, zipcode, longitude, latitude }
     } = req.body
+
+    const location = {
+        type: 'Point',
+        coords: [longitude, latitude]
+    }
 
     const { id: activityId } = req.params
 
@@ -137,7 +154,7 @@ const editActivity = (req, res, next) => {
                 available,
                 target,
                 accesibility,
-                address: { city, street, zipcode, location: { type, coords } }
+                address: { city, street, zipcode, location }
             },
             {
                 runValidators: true,
