@@ -35,7 +35,7 @@ const signupUser = (req, res, next) => {
             const salt = bcrypt.genSaltSync(saltRounds)
             const hashedPassword = bcrypt.hashSync(password, salt)
 
-            return User.create({ username, email, grade, password: hashedPassword })
+            return User.create({ username, email, password: hashedPassword })
         })
 
         .then(newUser => res.status(201).json(newUser))

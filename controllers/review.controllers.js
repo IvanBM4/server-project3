@@ -7,6 +7,12 @@ const getReviews = (req, res, next) => {
 
     Review
         .find()
+        .select({
+            activity: 1,
+            description: 1,
+            rating: 1,
+            author: 1
+        })
         .then(reviews => res.json(reviews))
         .catch(err => next(err))
 
@@ -23,8 +29,13 @@ const getOneReview = (req, res, next) => {
 
     Review
         .findById(reviewId)
-        .populate('Activity')
-        .populate('User')
+        .select({
+            activity: 1,
+            description: 1,
+            rating: 1,
+            author: 1
+        })
+        .populate('activity user')
         .then(review => res.json(review))
         .catch(err => next(err))
 }

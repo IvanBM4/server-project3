@@ -1,10 +1,10 @@
 const Activity = require('../models/Activity.model')
+const User = require('../models/User.model')
 const mongoose = require('mongoose')
-
 
 const getActivities = (req, res, next) => {
 
-    ActivityfilterActivities
+    Activity
         .find()
         .select({
             title: 1,
@@ -16,8 +16,10 @@ const getActivities = (req, res, next) => {
             accesibility: 1,
             address: 1,
             price: 1,
-            duration: 1
+            duration: 1,
+            createdAt: 1
         })
+        .sort({ createdAt: -1 })
         .then(activities => res.json(activities))
         .catch(err => next(err))
 }
@@ -27,27 +29,14 @@ const filterActivities = (req, res, next) => {
     const buildQuery = (filters) => {
         let query = {}
 
-        if (filters.name) {
-            query.name = new RegExp(filters.name, 'i')
-        }
-
-
+        if (filters.name) query.name = new RegExp(filters.name, 'i')
+        if (filters.price) query.price = { $gte: parseInt(filters.price) }
 
         if (filters.startDate || filters.endDate) {
             query.createdAt = {}
-            if (filters.startDate) {
-                query.createdAt.$gte = new Date(filters.startDate)
-            }
-            if (filters.endDate) {
-                query.createdAt.$lte = new Date(filters.endDate).setHours(23, 59, 59, 999)
-            }
+            if (filters.startDate) query.createdAt.$gte = new Date(filters.startDate)
+            if (filters.endDate) query.createdAt.$lte = new Date(filters.endDate).setHours(23, 59, 59, 999)
         }
-
-        if (filters.price) {
-            query.price = {}
-            query.price.$gte = parseInt(filters.price)
-        }
-
         return query
     }
 
@@ -71,6 +60,19 @@ const getOneActivity = (req, res, next) => {
 
     Activity
         .findById(activityId)
+        .select({
+            title: 1,
+            cover: 1,
+            description: 1,
+            host: 1,
+            categories: 1,
+            target: 1,
+            accesibility: 1,
+            address: 1,
+            price: 1,
+            duration: 1,
+            createdAt: 1
+        })
         .then(activities => res.json(activities))
         .catch(err => next(err))
 }
@@ -86,6 +88,7 @@ const getActivitiesByUser = (req, res, next) => {
 
     Activity
         .find({ host })
+        .populate('User')
         .then(activities => res.json(activities))
         .catch(err => next(err))
 }
