@@ -1,9 +1,10 @@
 const Activity = require('../models/Activity.model')
 const mongoose = require('mongoose')
 
+
 const getActivities = (req, res, next) => {
 
-    Activity
+    ActivityfilterActivities
         .find()
         .then(activities => res.json(activities))
         .catch(err => next(err))
@@ -18,6 +19,23 @@ const filterActivities = (req, res, next) => {
             query.name = new RegExp(filters.name, 'i')
         }
 
+
+
+        if (filters.startDate || filters.endDate) {
+            query.createdAt = {}
+            if (filters.startDate) {
+                query.createdAt.$gte = new Date(filters.startDate)
+            }
+            if (filters.endDate) {
+                query.createdAt.$lte = new Date(filters.endDate).setHours(23, 59, 59, 999)
+            }
+        }
+
+        if (filters.price) {
+            query.price = {}
+            query.price.$gte = parseInt(filters.price)
+        }
+
         return query
     }
 
@@ -25,6 +43,7 @@ const filterActivities = (req, res, next) => {
 
     Activity
         .find(query)
+        .sort({ createdAt: -1 })
         .then(activities => res.json(activities))
         .catch(err => next(err))
 }

@@ -12,7 +12,6 @@ const {
     getReviewByUser
 
 } = require('../controllers/review.controllers')
-const verifyToken = require('../middleware/verifyToken')
 
 const router = express.Router()
 
