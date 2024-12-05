@@ -1,3 +1,4 @@
+const { allowedAccesibilities } = require('../consts/allowed.consts')
 const Activity = require('../models/Activity.model')
 const mongoose = require('mongoose')
 
@@ -9,4 +10,8 @@ const getExistentAccesibilities = (req, res, next) => {
 
 }
 
-module.exports = { getExistentAccesibilities }
+const getAllowedAccesibilities = (req, res, next) => {
+    res.json(allowedAccesibilities)
+}
+
+module.exports = { getExistentAccesibilities, getAllowedAccesibilities }

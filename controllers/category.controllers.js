@@ -1,3 +1,4 @@
+const { allowedCategories } = require('../consts/allowed.consts')
 const Activity = require('../models/Activity.model')
 const mongoose = require('mongoose')
 
@@ -10,9 +11,6 @@ const getExistentCategories = (req, res, next) => {
 }
 
 const getAllowedCategories = (req, res, next) => {
-
-    const allowedCategories = ['Deportes', 'Senderismo', 'Cultural', 'Música',
-        'Aire libre', 'Ocio nocturno', 'Naturaleza']
 
     res.json(allowedCategories)
 

@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-
+const { allowedCategories, allowedTargets, allowedAccesibilities } = require('../consts/allowed.consts')
 const activitySchema = new Schema({
 
     name: {
@@ -22,8 +22,7 @@ const activitySchema = new Schema({
 
     categories: {
         type: [String],
-        enum: ['Deportes', 'Senderismo', 'Cultural', 'Música',
-            'Aire libre', 'Ocio nocturno', 'Naturaleza', 'Aventura']
+        enum: allowedCategories
     },
 
     address: {
@@ -46,7 +45,7 @@ const activitySchema = new Schema({
 
     target: {
         type: [String],
-        enum: ['Grupos de amigos', 'Familiar', 'Jóvenes', 'Todos los públicos']
+        enum: allowedTargets
     },
 
     price: {
@@ -71,7 +70,8 @@ const activitySchema = new Schema({
     },
 
     accesibility: {
-        type: [String]
+        type: [String],
+        enum: allowedAccesibilities
     },
 
     host: {
