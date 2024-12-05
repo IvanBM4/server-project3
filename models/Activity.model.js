@@ -21,7 +21,9 @@ const activitySchema = new Schema({
     },
 
     categories: {
-        type: [String]
+        type: [String],
+        enum: ['Deportes', 'Senderismo', 'Cultural', 'Música',
+            'Aire libre', 'Ocio nocturno', 'Naturaleza', 'Aventura']
     },
 
     address: {
@@ -43,7 +45,8 @@ const activitySchema = new Schema({
     },
 
     target: {
-        type: [String]
+        type: [String],
+        enum: ['Grupos de amigos', 'Familiar', 'Jóvenes', 'Todos los públicos']
     },
 
     price: {

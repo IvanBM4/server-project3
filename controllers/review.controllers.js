@@ -15,7 +15,6 @@ const getReviews = (req, res, next) => {
         })
         .then(reviews => res.json(reviews))
         .catch(err => next(err))
-
 }
 
 const getOneReview = (req, res, next) => {

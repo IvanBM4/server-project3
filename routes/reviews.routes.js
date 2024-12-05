@@ -31,5 +31,4 @@ router.get("/reviews/activities/:id", getReviewByActivity)
 
 router.get("/reviews/users/:id", getReviewByUser)
 
-
 module.exports = router
