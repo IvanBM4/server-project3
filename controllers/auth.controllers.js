@@ -95,9 +95,25 @@ const getUsers = (req, res, next) => {
 
 }
 
+const getOneUser = (req, res, next) => {
+
+    const { id: userId } = req.params
+
+    User
+        .findById(userId)
+        .select({
+            username: 1,
+            avatar: 1,
+        })
+        .then(user => res.json(user))
+        .catch(err => next(err))
+
+}
+
 module.exports = {
     signupUser,
     loginUser,
     verifyUser,
-    getUsers
+    getUsers,
+    getOneUser
 }
