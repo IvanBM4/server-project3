@@ -11,6 +11,7 @@ const getActivities = (req, res, next) => {
             cover: 1,
             description: 1,
             host: 1,
+            date: 1,
             categories: 1,
             target: 1,
             accesibility: 1,
@@ -65,6 +66,7 @@ const getOneActivity = (req, res, next) => {
             cover: 1,
             description: 1,
             host: 1,
+            date: 1,
             categories: 1,
             target: 1,
             accesibility: 1,
@@ -88,7 +90,7 @@ const getActivitiesByUser = (req, res, next) => {
 
     Activity
         .find({ host })
-        .populate('User')
+        .populate('host')
         .then(activities => res.json(activities))
         .catch(err => next(err))
 }
