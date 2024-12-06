@@ -12,6 +12,7 @@ const getActivities = (req, res, next) => {
             date: 1,
             description: 1,
             host: 1,
+            date: 1,
             categories: 1,
             target: 1,
             accesibility: 1,

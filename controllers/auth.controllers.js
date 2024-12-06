@@ -96,9 +96,7 @@ const getUsers = (req, res, next) => {
 }
 
 const getOneUser = (req, res, next) => {
-
     const { id: userId } = req.params
-
     User
         .findById(userId)
         .select({
@@ -107,7 +105,6 @@ const getOneUser = (req, res, next) => {
         })
         .then(user => res.json(user))
         .catch(err => next(err))
-
 }
 
 module.exports = {

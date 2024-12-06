@@ -104,7 +104,7 @@ const getReviewByActivity = (req, res, next) => {
 
     Review
         .find({ activity })
-        .populate('Activity')
+        .populate('author')
         .then(reviews => res.json(reviews))
         .catch(err => next(err))
 }
