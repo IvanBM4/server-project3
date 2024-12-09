@@ -18,6 +18,9 @@ module.exports = app => {
     const reviewRoutes = require('./reviews.routes')
     app.use("/api", reviewRoutes)
 
+    const uploadRoutes = require('./upload.routes')
+    app.use("/api", uploadRoutes)
+
 }
 
 

@@ -23,7 +23,7 @@ const userSchema = new Schema(
 
     avatar: {
       type: String,
-      default: 'https://example.com/default-avatar.png',
+      required: true
     },
 
     grade: {
