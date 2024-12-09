@@ -62,11 +62,13 @@ const getOneActivity = (req, res, next) => {
 
     Activity
         .findById(activityId)
+        .populate('host assistants')
         .select({
             name: 1,
             cover: 1,
             description: 1,
             host: 1,
+            assistants: 1,
             date: 1,
             categories: 1,
             target: 1,
