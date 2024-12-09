@@ -37,7 +37,13 @@ const userSchema = new Schema(
       type: String,
       enum: ['ADMIN', 'USER'],
       default: 'USER'
-    }
+    },
+
+    likedActivities: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Activity'
+    }]
+
 
   },
   {

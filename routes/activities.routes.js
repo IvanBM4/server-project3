@@ -6,7 +6,8 @@ const {
     editActivity,
     removeActivity,
     filterActivities,
-    getActivitiesByUser
+    getActivitiesByUser,
+    joinActivity
 } = require('../controllers/activity.controllers')
 const verifyToken = require('../middleware/verifyToken')
 
@@ -20,10 +21,13 @@ router.get('/activities/:id', getOneActivity)
 
 router.get('/activities/users/:id', getActivitiesByUser)
 
+router.post('/activities/:id/join', verifyToken, joinActivity)
+
 router.post('/activities/', verifyToken, saveActivity)
 
 router.put('/activities/:id', editActivity)
 
 router.delete('/activities/:id', removeActivity)
+
 
 module.exports = router

@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 const { allowedCategories, allowedTargets, allowedAccesibilities } = require('../consts/allowed.consts')
+
 const activitySchema = new Schema({
 
     name: {
@@ -77,7 +78,12 @@ const activitySchema = new Schema({
     host: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+
+    assistants: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 },
     {
         timestamps: true
@@ -86,3 +92,4 @@ const activitySchema = new Schema({
 activitySchema.index({ location: '2dsphere' })
 
 module.exports = model('Activity', activitySchema)
+

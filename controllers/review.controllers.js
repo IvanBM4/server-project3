@@ -34,7 +34,7 @@ const getOneReview = (req, res, next) => {
             rating: 1,
             author: 1
         })
-        .populate('activity user')
+        .populate('activity author')
         .then(review => res.json(review))
         .catch(err => next(err))
 }

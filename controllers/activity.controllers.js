@@ -206,6 +206,34 @@ const removeActivity = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const joinActivity = async (req, res, next) => {
+    try {
+        const { id: activityId } = req.params
+        const { _id: userId } = req.payload
+
+        if (!mongoose.Types.ObjectId.isValid(activityId)) {
+            return res.status(400).json({ message: 'Specified id is not valid' })
+        }
+
+        const activity = await Activity.findById(activityId)
+
+        if (!activity) {
+            return res.status(404).json({ message: 'Activity not found' })
+        }
+
+        if (activity.assistants.includes(userId)) {
+            return res.status(400).json({ message: 'User already joined this activity' })
+        }
+
+        activity.assistants.push(userId)
+        await activity.save()
+
+        res.status(200).json({ message: 'Successfully joined the activity' })
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     getActivities,
     getOneActivity,
@@ -213,5 +241,6 @@ module.exports = {
     editActivity,
     removeActivity,
     filterActivities,
-    getActivitiesByUser
+    getActivitiesByUser,
+    joinActivity
 }
