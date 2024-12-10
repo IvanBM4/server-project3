@@ -27,6 +27,8 @@ router.post('/activities/', verifyToken, saveActivity)
 
 router.put('/activities/:id', editActivity)
 
+router.post('/toggle-assistance/activityId', verifyToken, toggleAssistance)
+
 router.delete('/activities/:id', removeActivity)
 
 

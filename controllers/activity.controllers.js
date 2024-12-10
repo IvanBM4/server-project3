@@ -255,6 +255,30 @@ const joinActivity = async (req, res, next) => {
     }
 }
 
+const toggleAssistance = (req, res, next) => {
+    const { activityId } = req.params
+    const { userId } = req.payload._id
+
+    Activity
+        .findById(activityId)
+        .then(activity => {
+            if (!activity) {
+                return next(new Error('Actividad no encontrada'))
+            }
+            if (activity.assistants.includes(userId)) {
+                activity.assistants = activity.assistants.filter(id => id.toString() !== userId)
+            } else {
+                activity.assistants.push(userId)
+            }
+            return activity.save
+        })
+        .then(updatedActivity => res.status(200).json({
+            message: "Asistencia actualizada",
+            assistants: updatedActivity.assistants
+        }))
+        .catch(err => next(err))
+
+}
 module.exports = {
     getActivities,
     getOneActivity,
@@ -263,5 +287,6 @@ module.exports = {
     removeActivity,
     filterActivities,
     getActivitiesByUser,
-    joinActivity
+    joinActivity,
+    toggleAssistance
 }
