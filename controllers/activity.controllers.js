@@ -39,10 +39,24 @@ const filterActivities = (req, res, next) => {
             if (filters.startDate) query.createdAt.$gte = new Date(filters.startDate)
             if (filters.endDate) query.createdAt.$lte = new Date(filters.endDate).setHours(23, 59, 59, 999)
         }
+
+        if (filters.categories) {
+            query.categories = { $in: filters.categories.split(',') }
+        }
+
+        if (filters.target) {
+            query.target = { $in: filters.target.split(',') }
+        }
+
+        if (filters.accesibility) {
+            query.accesibility = { $in: filters.accesibility.split(',') }
+        }
+
         return query
     }
 
     const query = buildQuery(req.query)
+
 
     Activity
         .find(query)
@@ -229,6 +243,11 @@ const joinActivity = async (req, res, next) => {
 
         activity.assistants.push(userId)
         await activity.save()
+        await User.
+            findByIdAndUpdate(
+                userId,
+                { $addToSet: { likedActivities: activityId } }
+            )
 
         res.status(200).json({ message: 'Successfully joined the activity' })
     } catch (error) {
