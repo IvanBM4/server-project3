@@ -6,7 +6,8 @@ const allowedCategories = [
     'Aire libre',
     'Ocio nocturno',
     'Naturaleza',
-    'Aventura'
+    'Aventura',
+    'Comida'
 ]
 
 const allowedTargets = [
