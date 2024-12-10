@@ -255,28 +255,23 @@ const joinActivity = async (req, res, next) => {
     }
 }
 
-const toggleAssistance = (req, res, next) => {
-    const { activityId } = req.params
-    const { userId } = req.payload._id
+const leaveActivity = (req, res, next) => {
+    const { id: activityId } = req.params
+    const { _id: userId } = req.payload
 
     Activity
-        .findById(activityId)
-        .then(activity => {
-            if (!activity) {
-                return next(new Error('Actividad no encontrada'))
+        .findByIdAndUpdate(
+            activityId,
+            { $pull: { assistants: userId } },
+            { new: true }
+        )
+        .then(updatedActivity => {
+            if (!updatedActivity) {
+                return res.status(404).json({ message: "Actividad no encontrada" });
             }
-            if (activity.assistants.includes(userId)) {
-                activity.assistants = activity.assistants.filter(id => id.toString() !== userId)
-            } else {
-                activity.assistants.push(userId)
-            }
-            return activity.save
+            res.status(200).json(updatedActivity);
         })
-        .then(updatedActivity => res.status(200).json({
-            message: "Asistencia actualizada",
-            assistants: updatedActivity.assistants
-        }))
-        .catch(err => next(err))
+        .catch(err => next(err));
 
 }
 module.exports = {
@@ -288,5 +283,5 @@ module.exports = {
     filterActivities,
     getActivitiesByUser,
     joinActivity,
-    toggleAssistance
+    leaveActivity
 }
