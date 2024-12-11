@@ -1,11 +1,12 @@
 const User = require('../models/User.model')
+const Activity = require('../models/Activity.model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const saltRounds = 10
 
 const signupUser = (req, res, next) => {
 
-    const { username, email, password, avatar, grade } = req.body
+    const { username, email, password, avatar } = req.body
 
     if (email === '' || password === '' || username === '') {
         next(new Error('Provide email, password and username'))
@@ -66,8 +67,8 @@ const loginUser = (req, res, next) => {
                 res.status(401).json('Incorrect password')
             }
 
-            const { _id, email, username } = user
-            const payLoad = { _id, email, username }
+            const { _id, email, username, role } = user
+            const payLoad = { _id, email, username, role }
             const authToken = jwt.sign(
                 payLoad,
                 process.env.TOKEN_SECRET,
@@ -76,6 +77,7 @@ const loginUser = (req, res, next) => {
                 })
             res.json({ authToken })
         }
+
         )
 
 }
@@ -90,6 +92,12 @@ const getUsers = (req, res, next) => {
 
     User
         .find()
+        .select({
+            username: 1,
+            avatar: 1,
+            likedActivities: 1,
+            email: 1
+        })
         .then(users => res.json(users))
         .catch(err => next(err))
 
@@ -102,7 +110,10 @@ const getOneUser = (req, res, next) => {
         .select({
             username: 1,
             avatar: 1,
+            likedActivities: 1,
+            email: 1
         })
+        .populate('likedActivities')
         .then(user => res.json(user))
         .catch(err => next(err))
 }

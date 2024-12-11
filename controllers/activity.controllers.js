@@ -76,7 +76,8 @@ const getOneActivity = (req, res, next) => {
 
     Activity
         .findById(activityId)
-        .populate('host assistants')
+        .populate('host', 'username avatar email')
+        .populate('assistants', 'username avatar email')
         .select({
             name: 1,
             cover: 1,
