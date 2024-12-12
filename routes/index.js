@@ -21,6 +21,8 @@ module.exports = app => {
     const uploadRoutes = require('./upload.routes')
     app.use("/api", uploadRoutes)
 
+    const messageRoutes = require('./messages.routes')
+    app.use('/api', messageRoutes)
 }
 
 
