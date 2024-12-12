@@ -33,6 +33,7 @@ const fetchReceiverMessages = (req, res, next) => {
     Message
         .find({ receiver })
         .populate('sender', 'username avatar')
+        .sort({ createdAt: -1 })
         .then(messages => res.json(messages))
         .catch(err => next(err))
 
